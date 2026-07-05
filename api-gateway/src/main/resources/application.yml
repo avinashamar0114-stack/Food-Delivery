@@ -1,0 +1,105 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+
+        cors-configurations:
+          '[/**]':
+
+            allowedOriginPatterns:
+              - "http://localhost:4200"
+
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+
+            allowedHeaders: "*"
+
+            allowCredentials: true
+
+      routes:
+
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth,/auth/**
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users,/users/**
+
+        - id: restaurant-service
+          uri: lb://RESTAURANT-SERVICE
+          predicates:
+            - Path=/restaurants,/restaurants/**
+
+        - id: menu-service
+          uri: lb://MENU-SERVICE
+          predicates:
+            - Path=/menu,/menu/**
+
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/orders,/orders/**
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payments,/payments/**
+
+        - id: delivery-service
+          uri: lb://DELIVERY-SERVICE
+          predicates:
+            - Path=/delivery,/delivery/**
+
+        - id: admin-service
+          uri: lb://ADMIN-SERVICE
+          predicates:
+            - Path=/admin,/admin/**
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+    urls:
+      - name: auth-service
+        url: /auth/v3/api-docs
+
+      - name: user-service
+        url: /users/v3/api-docs
+
+      - name: restaurant-service
+        url: /restaurants/v3/api-docs
+
+      - name: menu-service
+        url: /menu/v3/api-docs
+
+      - name: order-service
+        url: /orders/v3/api-docs
+
+      - name: payment-service
+        url: /payments/v3/api-docs
+
+      - name: delivery-service
+        url: /delivery/v3/api-docs
+
+      - name: admin-service
+        url: /admin/v3/api-docs
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
