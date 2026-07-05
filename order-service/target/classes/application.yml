@@ -1,0 +1,29 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: ORDER-SERVICE
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/order_db
+    username: root
+    password: Amar@0112
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  file:
+    name: logs/order.log
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
